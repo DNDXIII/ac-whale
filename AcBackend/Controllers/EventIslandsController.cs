@@ -1,56 +1,58 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcBackend.Models;
 
 namespace AcBackend.Controllers
 {
-    [Route("api/Islands/Turnips")]
+    [Route("api/Islands/Events")]
     [ApiController]
-    public class TurnipIslandsController : ControllerBase
+    public class EventIslandsController : ControllerBase
     {
         private readonly ACContext _context;
 
-        public TurnipIslandsController(ACContext context)
+        public EventIslandsController(ACContext context)
         {
             _context = context;
         }
 
-        // GET: api/TurnipIslands
+        // GET: api/EventIslands
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TurnipIsland>>> GetTurnipIslands()
+        public async Task<ActionResult<IEnumerable<EventIsland>>> GetEventIslands()
         {
-            return await _context.TurnipIslands.ToListAsync();
+            return await _context.EventIslands.ToListAsync();
         }
 
-        // GET: api/TurnipIslands/5
+        // GET: api/EventIslands/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TurnipIsland>> GetTurnipIsland(long id)
+        public async Task<ActionResult<EventIsland>> GetEventIsland(long id)
         {
-            var turnipIsland = await _context.TurnipIslands.FindAsync(id);
+            var eventIsland = await _context.EventIslands.FindAsync(id);
 
-            if (turnipIsland == null)
+            if (eventIsland == null)
             {
                 return NotFound();
             }
 
-            return turnipIsland;
+            return eventIsland;
         }
 
-        // PUT: api/TurnipIslands/5
+        // PUT: api/EventIslands/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTurnipIsland(long id, TurnipIsland turnipIsland)
+        public async Task<IActionResult> PutEventIsland(long id, EventIsland eventIsland)
         {
-            if (id != turnipIsland.Id)
+            if (id != eventIsland.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(turnipIsland).State = EntityState.Modified;
+            _context.Entry(eventIsland).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +60,7 @@ namespace AcBackend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TurnipIslandExists(id))
+                if (!EventIslandExists(id))
                 {
                     return NotFound();
                 }
@@ -71,37 +73,37 @@ namespace AcBackend.Controllers
             return NoContent();
         }
 
-        // POST: api/TurnipIslands
+        // POST: api/EventIslands
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<TurnipIsland>> PostTurnipIsland(TurnipIsland turnipIsland)
+        public async Task<ActionResult<EventIsland>> PostEventIsland(EventIsland eventIsland)
         {
-            _context.TurnipIslands.Add(turnipIsland);
+            _context.EventIslands.Add(eventIsland);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTurnipIsland", new { id = turnipIsland.Id }, turnipIsland);
+            return CreatedAtAction("GetEventIsland", new { id = eventIsland.Id }, eventIsland);
         }
 
-        // DELETE: api/TurnipIslands/5
+        // DELETE: api/EventIslands/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TurnipIsland>> DeleteTurnipIsland(long id)
+        public async Task<ActionResult<EventIsland>> DeleteEventIsland(long id)
         {
-            var turnipIsland = await _context.TurnipIslands.FindAsync(id);
-            if (turnipIsland == null)
+            var eventIsland = await _context.EventIslands.FindAsync(id);
+            if (eventIsland == null)
             {
                 return NotFound();
             }
 
-            _context.TurnipIslands.Remove(turnipIsland);
+            _context.EventIslands.Remove(eventIsland);
             await _context.SaveChangesAsync();
 
-            return turnipIsland;
+            return eventIsland;
         }
 
-        private bool TurnipIslandExists(long id)
+        private bool EventIslandExists(long id)
         {
-            return _context.TurnipIslands.Any(e => e.Id == id);
+            return _context.EventIslands.Any(e => e.Id == id);
         }
     }
 }

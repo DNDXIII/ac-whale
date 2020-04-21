@@ -9,8 +9,12 @@ namespace AcBackend.Models
         {
         }
 
+        public DbSet<Island> Islands { get; set; }
         public DbSet<TurnipIsland> TurnipIslands { get; set; }
-        public DbSet<Visitor> Visitors { get; set; }
+        public DbSet<EventIsland> EventIslands { get; set; }
+
+        public DbSet<QueueUser> QueueUsers { get; set; }
+        public DbSet<VisitingUser> VisitingUsers { get; set; }
 
     }
 }

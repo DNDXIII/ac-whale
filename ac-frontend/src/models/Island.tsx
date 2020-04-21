@@ -2,6 +2,7 @@ export enum EntryFeeType {
   bells = "Bells",
   nookTicket = "Nook Ticket",
   other = "Other",
+  none = "None"
 }
 
 export enum Hemisphere {

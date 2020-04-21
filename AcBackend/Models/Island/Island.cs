@@ -6,7 +6,8 @@ public enum EntryFeeType
 {
     Bells,
     NookTicket,
-    Other
+    Other,
+    None
 }
 public enum Hemisphere
 {
@@ -14,8 +15,9 @@ public enum Hemisphere
     South
 }
 
-public abstract class Island
+public class Island
 {
+    [Key]
     public long Id { get; set; }
 
     public DateTime DateCreated { get; set; }
@@ -40,9 +42,9 @@ public abstract class Island
     public int MaxVisitorsQueue { get; set; }
 
 
-    public IList<Visitor> Visitors { get; set; } = new List<Visitor>();// Visitors inside
+    public ICollection<VisitingUser> Visitors { get; set; } = new List<VisitingUser>(); // Visitors inside
 
-    public IList<Visitor> VisitorsQueue { get; set; } = new List<Visitor>(); // Visitors waiting
+    public Queue<QueueUser> VisitorsQueue { get; set; } = new Queue<QueueUser>(); // Visitors waiting
 
 
     public Island()
