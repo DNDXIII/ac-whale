@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AcBackend.Models;
 using System.Text.Json.Serialization;
+using System;
 
 namespace AcBackend
 {
@@ -25,6 +26,7 @@ namespace AcBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // TODO For CORS
             services.AddCors(options =>
             {
@@ -35,12 +37,19 @@ namespace AcBackend
                 });
             });
 
+
+            // For PSQL 
+            services.AddDbContext<ACContext>(options =>
+                options.UseNpgsql(Configuration.GetSection("DatabaseConfig")["PostgresSQL"])
+            );
+            /* 
             services.AddDbContext<ACContext>(opt =>
               opt.UseInMemoryDatabase("AnimalCrossing"));
+              */
             services.AddControllers().AddJsonOptions(opts =>
-                {
-                    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });
+            {
+                opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
