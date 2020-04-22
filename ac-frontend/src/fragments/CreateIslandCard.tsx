@@ -2,26 +2,22 @@ import React, { useState, FunctionComponent } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Card, Form, Col, Button } from 'react-bootstrap';
-import { EntryFeeType, Hemisphere } from '../../models/Island';
-import usePostIslandService from '../../services/usePostIslandService';
-import { TurnipIsland } from '../../models/TurnipIsland';
+import { EntryFeeType, Hemisphere, IslandTypes, initialIslandState, Island } from '../models/Island';
+import usePostIslandService from '../services/usePostIslandService';
+import { TurnipIsland, initialTurnipIslandState } from '../models/TurnipIsland';
 
-const CreateIsland: FunctionComponent = () => {
+
+// Change this one when we get more island types
+interface IProps {
+  islandType?: IslandTypes,
+}
+
+const CreateIslandCard: FunctionComponent<IProps> = ({ islandType = IslandTypes.default }) => {
   const history = useHistory();
 
-  const initialIslandState: TurnipIsland = {
-    name: '',
-    description: '',
-    entryFeeType: EntryFeeType.bells,
-    entryFeeAmount: 1,
-    hemisphere: Hemisphere.north,
-    dodoCode: '',
-    buying: false,
-    currentPrice: 0
-  };
-
-  const [island, setIsland] = useState<TurnipIsland>(
-    initialIslandState
+  const initialState = islandType === IslandTypes.turnipIsland ? initialTurnipIslandState : initialIslandState;
+  const [island, setIsland] = useState<Island | TurnipIsland>(
+    initialState
   );
 
   const { service, publishIsland } = usePostIslandService();
@@ -44,7 +40,7 @@ const CreateIsland: FunctionComponent = () => {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    publishIsland(island).then(() => history.push("/stalk-market/open-island"));
+    publishIsland(island, islandType).then(() => history.push("/turnips/open-island"));
   };
 
 
@@ -64,11 +60,14 @@ const CreateIsland: FunctionComponent = () => {
             <Form.Control required name="description" value={island.description} onChange={handleChange} />
           </Form.Group>
 
-          <Form.Group controlId="formIslandCurrentPrice">
-            <Form.Label>Current Turnip Price</Form.Label>
-            <Form.Control required name="currentPrice" value={island.currentPrice} onChange={handleChange} type="number" />
-
-          </Form.Group>
+          {islandType === IslandTypes.turnipIsland &&
+            (
+              <Form.Group controlId="formIslandCurrentPrice">
+                <Form.Label>Current Turnip Price</Form.Label>
+                <Form.Control required name="currentPrice" value={(island as TurnipIsland).currentPrice} onChange={handleChange} type="number" />
+              </Form.Group>
+            )
+          }
 
 
           <Form.Group controlId="formIslandEntryFeeType">
@@ -110,4 +109,4 @@ const CreateIsland: FunctionComponent = () => {
 }
 
 
-export default CreateIsland;
+export default CreateIslandCard;

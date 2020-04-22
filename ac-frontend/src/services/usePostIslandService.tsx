@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Service } from '../common/Service';
 import { baseUrl } from '../settings';
 import { TurnipIsland } from '../models/TurnipIsland';
+import { Island, IslandTypes } from '../models/Island';
 
 
 const usePostIslandService = () => {
@@ -9,14 +10,17 @@ const usePostIslandService = () => {
         status: 'init'
     });
 
-    const publishIsland = (island: TurnipIsland) => {
+    const publishIsland = (island: Island | TurnipIsland, islandType: IslandTypes) => {
         setService({ status: 'loading' });
+
+        const url = islandType === IslandTypes.turnipIsland ? baseUrl + "islands/turnips" : baseUrl + "islands"
 
         const headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=utf-8');
 
+
         return new Promise((resolve, reject) => {
-            fetch(baseUrl + "turnipislands", {
+            fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(island),
                 headers

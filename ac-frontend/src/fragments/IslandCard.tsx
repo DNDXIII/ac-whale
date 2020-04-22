@@ -15,10 +15,10 @@ interface TurnipIslandProps {
   island: TurnipIsland
 }
 
-type Props = TurnipIslandProps | IslandProps;
+type IProps = TurnipIslandProps | IslandProps;
 
 
-export default class IslandCard extends PureComponent<Props> {
+export default class IslandCard extends PureComponent<IProps> {
   render() {
     const { island, islandType = IslandTypes.default } = this.props;
 
@@ -34,17 +34,13 @@ export default class IslandCard extends PureComponent<Props> {
           </Card.Subtitle>
           <Card.Text>
             {
-              islandType === IslandTypes.turnipIsland && (
-                <div>
-                  <span >Turnip price: {(island as TurnipIsland).currentPrice}</span><br />
-                </div>
-              )
+              islandType === IslandTypes.turnipIsland && <span >Turnip price: {(island as TurnipIsland).currentPrice}<br /></span>
             }
             <span>Entry Fee: {island.entryFeeAmount} {island.entryFeeType}</span><br />
-            <div className="mt-3">{island.description}</div>
+            <span className="mt-3">{island.description}</span>
           </Card.Text>
 
-          <Link to="stalk-market/open-island">
+          <Link to="turnips/open-island">
             <Button variant="primary">Get in Line</Button>
           </Link>
         </Card.Body>

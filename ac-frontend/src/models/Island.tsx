@@ -12,6 +12,7 @@ export enum Hemisphere {
 
 export enum IslandTypes {
   default = "Default",
+  eventIsland = "Event",
   turnipIsland = "Turnip"
 }
 
@@ -25,3 +26,12 @@ export interface Island {
   hemisphere: Hemisphere;
   dodoCode: string;
 }
+
+export const initialIslandState: Island = {
+  name: '',
+  description: '',
+  entryFeeType: EntryFeeType.bells,
+  entryFeeAmount: 1,
+  hemisphere: Hemisphere.north,
+  dodoCode: '',
+};

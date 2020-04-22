@@ -2,13 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/home/Home";
 import About from "./components/about/About";
-import StalkMarket from "./components/stalk-market/StalkMarket";
+import StalkMarket from "./components/turnips/StalkMarket";
 import styled from "styled-components";
 import { Nav, Container } from "react-bootstrap";
 import Colors from "./common/Colors";
-import CreateIsland from "./components/stalk-market/CreateIsland";
-import OpenIsland from "./components/stalk-market/OpenIsland";
+import CreateIslandCard from "./fragments/CreateIslandCard";
+import OpenIsland from "./components/turnips/OpenIsland";
 import "./common/_styling.scss"
+import { IslandTypes } from "./models/Island";
 
 const Body = styled.div`
   display: flex;
@@ -43,7 +44,7 @@ export default function App() {
             <Nav.Link href="/">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="/stalk-market">Stalk Market</Nav.Link>
+            <Nav.Link href="/turnips">Turnips</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="/about">About</Nav.Link>
@@ -55,13 +56,13 @@ export default function App() {
             <Route path="/about">
               <About />
             </Route>
-            <Route path="/stalk-market/create">
-              <CreateIsland />
+            <Route path="/turnips/create">
+              <CreateIslandCard islandType={IslandTypes.turnipIsland} />
             </Route>
-            <Route path="/stalk-market/open-island">
+            <Route path="/turnips/open-island">
               <OpenIsland />
             </Route>
-            <Route path="/stalk-market">
+            <Route path="/turnips">
               <StalkMarket />
             </Route>
             <Route path="/">
