@@ -20,3 +20,14 @@ services:
       - 5001:80
     depends_on:
       - db
+
+  web:
+    build:
+      context: ./ac-frontend
+      dockerfile: Dockerfile
+    container_name: web
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    stdin_open: true

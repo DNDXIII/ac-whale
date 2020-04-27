@@ -1,2 +1,2 @@
 // TODO Change this in production
-export const baseUrl: string = "https://localhost:5001/api/";
+export const baseUrl: string = "http://localhost:5001/api/";
